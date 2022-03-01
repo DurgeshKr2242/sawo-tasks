@@ -1,11 +1,51 @@
 import React, { useState } from "react";
+import Link from "next/link";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
-const ProjectApprove = () => {
+import { approvePost } from "../../../apis";
+import { useGlobalAuthContext } from "../../../AuthContext";
+const ProjectApprove = ({ post }) => {
   const [points, setPoints] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { user } = useGlobalAuthContext();
+  const router = useRouter();
+
+  const approvePostHandler = async (postId, userId, points) => {
+    setLoading(true);
+    try {
+      if (!points) {
+        throw "Please enter valid points";
+      }
+      await approvePost(postId, userId, points);
+      toast("Approved! Points alloted", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      router.reload();
+    } catch (err) {
+      toast.error(err, {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+    setLoading(false);
+  };
+
   return (
     <div className="flex flex-col w-full gap-4 px-3 py-2 border-2 rounded-lg border-yellow">
       <div className="flex justify-between">
-        <p>By : Durgesh Kumar (Developer)</p>
+        <p>By : {post.data.createdBy.name} (Developer)</p>
         <div className="flex items-center gap-2">
           <label>Points : </label>
           <input
@@ -17,19 +57,49 @@ const ProjectApprove = () => {
         </div>
       </div>
       <div className="flex flex-col gap-1 text-sm">
-        <p>Name: Subsciption Tracker</p>
-        <p>Live : Click Here</p>
-        <p>GitHub Url : Click Here</p>
+        <p>Name: {post.data.Project.projectName}</p>
+        <p>
+          Live :{" "}
+          <Link href={post.data.Project.liveUrl}>
+            <a
+              target="_blank"
+              className="underline underline-offset-1 decoration-2 decoration-indigo-500 "
+            >
+              Click Here
+            </a>
+          </Link>
+        </p>
+        <p>
+          GitHub Url :{" "}
+          <Link href={post.data.Project.githubUrl}>
+            <a
+              target="_blank"
+              className="underline underline-offset-1 decoration-2 decoration-indigo-500 "
+            >
+              Click Here
+            </a>
+          </Link>
+        </p>
         <p>
           About : <br />
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque magni,
-          ratione sapiente velit mollitia similique nobis magnam repellat vero
-          voluptatem.
+          {post.data.Project.description}
         </p>
       </div>
       <div className="flex items-center justify-between">
-        <button className="button-primary">Approve</button>
-        <p className="text-right">22/12/2022, 12pm</p>
+        <button
+          disabled={loading ? true : false}
+          // onClick={() => approvePost(post.id, user.id, points)}
+          onClick={() => approvePostHandler(post.id, user.id, points)}
+          className="button-primary"
+        >
+          Approve
+        </button>
+        <div className="flex flex-col text-sm text-right">
+          <p> {post.data.timestamp.toDate().toDateString("en-US")}</p>
+          <p className="text-xs">
+            {post.data.timestamp.toDate().toLocaleTimeString("en-US")}
+          </p>
+        </div>
       </div>
     </div>
   );

@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import { serverTimestamp } from "firebase/firestore";
+import { Firestore, serverTimestamp } from "firebase/firestore";
+import { Timestamp } from "firebase/firestore";
+import { toast } from "react-toastify";
 
 import { addTask } from "../../../apis";
 import { useGlobalAuthContext } from "../../../AuthContext";
 const SocialMentions = () => {
   const { user } = useGlobalAuthContext();
+  const [loading, setLoading] = useState(false);
 
   const [linkedInUrl, setLinkedInUrl] = useState("");
   const [linkedInComment, setLinkedInComment] = useState(null);
@@ -20,6 +23,8 @@ const SocialMentions = () => {
   const [instaOtherInsights, setInstaOtherInsights] = useState("");
 
   const socialMentionsSubmitHandler = async () => {
+    setLoading(true);
+
     const data = {
       taskType: "SocialMentions",
       SocialMention: {
@@ -43,7 +48,7 @@ const SocialMentions = () => {
         },
       },
       points: 0,
-      timestamp: serverTimestamp(),
+      timestamp: Timestamp.now(),
       createdBy: {
         name: user.data.name,
         email: user.data.emailId,
@@ -51,21 +56,47 @@ const SocialMentions = () => {
       approved: false,
     };
 
-    const addedSocialMention = await addTask(data);
-    console.log(addedSocialMention);
+    try {
+      if (!twitterUrl && !linkedInUrl && !instaUrl) {
+        throw "Please enter your posts link";
+      }
+      const addedSocialMention = await addTask(data);
+      console.log(addedSocialMention);
+      toast("Task Submitted, waiting for approval!", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } catch (err) {
+      toast.error(err, {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
 
     setLinkedInUrl("");
-    setLinkedInComment(null);
-    setLinkedInViews(null);
-    setLinkedInReactions(null);
+    setLinkedInComment("");
+    setLinkedInViews("");
+    setLinkedInReactions("");
     setTwitterUrl("");
-    setTwitterLikes(null);
-    setTwitterComments(null);
+    setTwitterLikes("");
+    setTwitterComments("");
     setTwitterOtherInsights("");
     setInstaUrl("");
-    setInstaLikes(null);
-    setInstaComments(null);
+    setInstaLikes("");
+    setInstaComments("");
     setInstaOtherInsights("");
+
+    setLoading(false);
   };
 
   return (
@@ -249,6 +280,7 @@ const SocialMentions = () => {
       </div>
 
       <button
+        disabled={loading ? true : false}
         onClick={socialMentionsSubmitHandler}
         className="mt-6 button-primary"
       >

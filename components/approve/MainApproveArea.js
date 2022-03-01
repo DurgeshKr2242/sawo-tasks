@@ -2,18 +2,29 @@ import React, { useState, useEffect } from "react";
 import SocialMentionApprove from "./approveBoxes/SocialMentionApprove";
 import BlogApprove from "./approveBoxes/BlogApprove";
 import ProjectApprove from "./approveBoxes/ProjectApprove";
-import { getAllPendingSocialMentions } from "../../apis";
+import {
+  getAllPendingSocialMentions,
+  getAllPendingBlog,
+  getAllPendingProject,
+} from "../../apis";
 
 const options = ["Social Mentions", "Blogs", "Projects"];
 
 const MainApproveArea = () => {
   const [activeInput, setActiveInput] = useState("Social Mentions");
   const [allPendingSocialMention, setAllPendingSocialMention] = useState([]);
+  const [allPendingBlog, setAllPendingBlog] = useState([]);
+  const [allPendingProject, setAllPendingProject] = useState([]);
 
   useEffect(() => {
     getAllPendingSocialMentions().then((posts) => {
       setAllPendingSocialMention(posts);
-      // console.log(posts);
+    });
+    getAllPendingBlog().then((posts) => {
+      setAllPendingBlog(posts);
+    });
+    getAllPendingProject().then((posts) => {
+      setAllPendingProject(posts);
     });
   }, []);
 
@@ -35,20 +46,23 @@ const MainApproveArea = () => {
         })}
       </ul>
 
-      {activeInput === "Social Mentions" ? (
-        allPendingSocialMention?.map((post) => {
-          return (
-            <SocialMentionApprove
-              post={post}
-              // allPendingSocialMention={allPendingSocialMention}
-            />
-          );
-        })
-      ) : activeInput === "Blogs" ? (
-        <BlogApprove />
-      ) : (
-        <ProjectApprove />
-      )}
+      {activeInput === "Social Mentions"
+        ? allPendingSocialMention?.map((post, i) => {
+            return (
+              <SocialMentionApprove
+                post={post}
+                key={i}
+                // allPendingSocialMention={allPendingSocialMention}
+              />
+            );
+          })
+        : activeInput === "Blogs"
+        ? allPendingBlog?.map((post, i) => {
+            return <BlogApprove post={post} key={i} />;
+          })
+        : allPendingProject?.map((post, i) => {
+            return <ProjectApprove post={post} key={i} />;
+          })}
     </div>
   );
 };

@@ -1,15 +1,47 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 import { approvePost } from "../../../apis";
 import { useGlobalAuthContext } from "../../../AuthContext";
 
 const SocialMentionApprove = ({ post }) => {
   const [points, setPoints] = useState("");
+  const [loading, setLoading] = useState(false);
   const { user } = useGlobalAuthContext();
-  // const approveHandler = async (taskId, userId, points) => {
-  // approvePost(taskId, userId, points)
-  // };
+  const router = useRouter();
+
+  const approvePostHandler = async (postId, userId, points) => {
+    setLoading(true);
+    try {
+      if (!points) {
+        throw "Please enter valid points";
+      }
+      await approvePost(postId, userId, points);
+      toast("Approved! Points alloted", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      router.reload();
+    } catch (err) {
+      toast.error(err, {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+    setLoading(false);
+  };
 
   return (
     <>
@@ -129,17 +161,20 @@ const SocialMentionApprove = ({ post }) => {
 
         <div className="flex items-center justify-between">
           <button
-            onClick={() =>
-              approvePost(post.id, user.id, points).then((res) =>
-                console.log(res)
-              )
-            }
+            disabled={loading ? true : false}
+            // onClick={() => approvePost(post.id, user.id, points)}
+            onClick={() => approvePostHandler(post.id, user.id, points)}
             // onClick={() => console.log(post.id, user.id, points)}
             className="button-primary"
           >
             Approve
           </button>
-          <p className="text-right">22/12/2022, 12pm</p>
+          <div className="flex flex-col text-sm text-right">
+            <p> {post.data.timestamp.toDate().toDateString("en-US")}</p>
+            <p className="text-xs">
+              {post.data.timestamp.toDate().toLocaleTimeString("en-US")}
+            </p>
+          </div>
         </div>
       </div>
       {/* );

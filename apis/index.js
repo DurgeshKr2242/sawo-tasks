@@ -48,6 +48,44 @@ export const getAllPendingSocialMentions = async () => {
   // });
   return foundPosts;
 };
+export const getAllPendingBlog = async () => {
+  const foundPosts = [];
+  const taskRef = collection(db, "Tasks");
+  const q = await query(
+    taskRef,
+    where("taskType", "==", "Blog"),
+    where("approved", "==", false)
+  );
+  const querySnapshot = await getDocs(q);
+  // const snapshot = await getDocs(taskRef);
+  querySnapshot.forEach((doc) => {
+    foundPosts.push({ id: doc.id, data: doc.data() });
+  });
+
+  // snapshot.forEach((doc) => {
+  //   foundPosts.push({ id: doc.id, data: doc.data() });
+  // });
+  return foundPosts;
+};
+export const getAllPendingProject = async () => {
+  const foundPosts = [];
+  const taskRef = collection(db, "Tasks");
+  const q = await query(
+    taskRef,
+    where("taskType", "==", "Project"),
+    where("approved", "==", false)
+  );
+  const querySnapshot = await getDocs(q);
+  // const snapshot = await getDocs(taskRef);
+  querySnapshot.forEach((doc) => {
+    foundPosts.push({ id: doc.id, data: doc.data() });
+  });
+
+  // snapshot.forEach((doc) => {
+  //   foundPosts.push({ id: doc.id, data: doc.data() });
+  // });
+  return foundPosts;
+};
 
 export const addTask = async (data) => {
   const docRef = collection(db, "Tasks");

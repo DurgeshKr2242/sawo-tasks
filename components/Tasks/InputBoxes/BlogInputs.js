@@ -1,15 +1,19 @@
 import React, { useState } from "react";
-import { addTask } from "../../../apis";
+import { toast } from "react-toastify";
 import { serverTimestamp } from "firebase/firestore";
+import { Timestamp } from "firebase/firestore";
+import { addTask } from "../../../apis";
 import { useGlobalAuthContext } from "../../../AuthContext";
 
 const BlogInputs = () => {
   const { user } = useGlobalAuthContext();
+  const [loading, setLoading] = useState(false);
   const [blogUrl, setBlogUrl] = useState("");
   const [blogTitle, setBlogTitle] = useState("");
   const [platform, setPlatform] = useState("");
 
   const blogSubmitHandler = async () => {
+    setLoading(true);
     const data = {
       taskType: "Blog",
       Blog: {
@@ -18,20 +22,44 @@ const BlogInputs = () => {
         blogUrl,
       },
       points: 0,
-      timestamp: serverTimestamp(),
+      timestamp: Timestamp.now(),
       createdBy: {
         name: user.data.name,
         email: user.data.emailId,
       },
       approved: false,
     };
-
-    const addedBlog = await addTask(data);
-    console.log(addedBlog);
+    try {
+      if (!blogUrl) {
+        throw "Please enter a valid Blog Url";
+      }
+      const addedBlog = await addTask(data);
+      console.log(addedBlog);
+      toast("Task Submitted, waiting for approval!", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } catch (err) {
+      toast.error(err, {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
 
     setBlogTitle("");
     setBlogUrl("");
     setPlatform("");
+    setLoading(false);
   };
 
   return (
@@ -81,7 +109,11 @@ const BlogInputs = () => {
         />
       </div>
 
-      <button onClick={blogSubmitHandler} className="mt-6 button-primary">
+      <button
+        disabled={loading ? true : false}
+        onClick={blogSubmitHandler}
+        className="mt-6 button-primary"
+      >
         Submit Your Task
       </button>
     </>
