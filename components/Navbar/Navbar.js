@@ -1,11 +1,15 @@
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { GoThreeBars } from "react-icons/go";
 import { useGlobalAuthContext } from "../../AuthContext";
 const Navbar = () => {
   const router = useRouter();
   const { user } = useGlobalAuthContext();
   const [showMenue, setShowMenue] = useState(false);
+  // useEffect(() => {
+  //   console.log(user?.id);
+  // }, [user]);
+
   return (
     <div key="help" className="flex justify-center w-full">
       <div className="relative flex items-center justify-between w-full px-6 py-6 text-sm font-bold max-w-7xl labtop:px-2">
@@ -43,7 +47,13 @@ const Navbar = () => {
           </ul>
 
           <div className="flex gap-5 ">
-            {user ? (
+            <button
+              onClick={() => router.push("/activity")}
+              className="button-secondary"
+            >
+              Activity
+            </button>
+            {user?.id ? (
               <button
                 onClick={() => {
                   localStorage.removeItem("sawoPayload");
@@ -51,7 +61,7 @@ const Navbar = () => {
                 }}
                 className="button-primary"
               >
-                logout
+                Logout
               </button>
             ) : (
               <button

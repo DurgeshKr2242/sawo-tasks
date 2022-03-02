@@ -99,7 +99,8 @@ export const login = async (email) => {
   const q = await query(userRef, where("emailId", "==", email));
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
-    foundUser.push({ id: doc.id, data: doc.data() });
+    // foundUser.push({ id: doc.id, data: doc.data() });
+    console.log({ id: doc.id, data: doc.data() });
   });
   // console.log(foundUser[0]);
   return foundUser[0];

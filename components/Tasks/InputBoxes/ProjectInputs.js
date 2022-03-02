@@ -30,6 +30,7 @@ const Projects = () => {
         name: user.data.name,
         email: user.data.emailId,
         champType: user.data.champType,
+        creatorId: user.id,
       },
       approved: false,
     };
