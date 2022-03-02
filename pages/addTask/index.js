@@ -5,9 +5,7 @@ import { getAllTasks } from "../../apis";
 import { getAllPendingSocialMentions } from "../../apis";
 const AddTask = () => {
   useEffect(() => {
-    // getAllTasks().then((posts) => console.log(posts));
     getAllPendingSocialMentions().then((posts) => console.log(posts));
-    // console.log(posts);
   }, []);
 
   return (

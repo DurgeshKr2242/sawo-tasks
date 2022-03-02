@@ -71,8 +71,6 @@ const Navbar = () => {
                 Login
               </button>
             )}
-
-            {/* <button className="button-secondary">SignUp</button> */}
           </div>
         </div>
         <GoThreeBars
@@ -82,7 +80,6 @@ const Navbar = () => {
 
         {showMenue && (
           <ul className="absolute left-0 right-0 flex flex-col items-center w-screen gap-3 pb-12 bg-white shadow-md -bottom-56">
-            {/* <ul className="flex flex-col"> */}
             <li
               onClick={() => router.push("/addTask")}
               className="relative cursor-pointer group"
@@ -128,8 +125,6 @@ const Navbar = () => {
                   Login
                 </button>
               )}
-
-              {/* <button className="button-secondary">SignUp</button> */}
             </div>
           </ul>
         )}

@@ -48,13 +48,7 @@ const MainApproveArea = () => {
 
       {activeInput === "Social Mentions"
         ? allPendingSocialMention?.map((post, i) => {
-            return (
-              <SocialMentionApprove
-                post={post}
-                key={i}
-                // allPendingSocialMention={allPendingSocialMention}
-              />
-            );
+            return <SocialMentionApprove post={post} key={i} />;
           })
         : activeInput === "Blogs"
         ? allPendingBlog?.map((post, i) => {

@@ -21,14 +21,6 @@ export const getAllTasks = async () => {
   return foundPosts;
 };
 
-// export const getAllTasks = async () => {
-//   const docRef = collection(db, "Tasks");
-//   const snapshot = await getDocs(docRef);
-//   snapshot.forEach((doc) => {
-//     console.log(doc.id, "=>", doc.data());
-//   });
-// };
-
 export const getAllPendingSocialMentions = async () => {
   const foundPosts = [];
   const taskRef = collection(db, "Tasks");
@@ -38,14 +30,10 @@ export const getAllPendingSocialMentions = async () => {
     where("approved", "==", false)
   );
   const querySnapshot = await getDocs(q);
-  // const snapshot = await getDocs(taskRef);
   querySnapshot.forEach((doc) => {
     foundPosts.push({ id: doc.id, data: doc.data() });
   });
 
-  // snapshot.forEach((doc) => {
-  //   foundPosts.push({ id: doc.id, data: doc.data() });
-  // });
   return foundPosts;
 };
 export const getAllPendingBlog = async () => {
@@ -57,14 +45,10 @@ export const getAllPendingBlog = async () => {
     where("approved", "==", false)
   );
   const querySnapshot = await getDocs(q);
-  // const snapshot = await getDocs(taskRef);
   querySnapshot.forEach((doc) => {
     foundPosts.push({ id: doc.id, data: doc.data() });
   });
 
-  // snapshot.forEach((doc) => {
-  //   foundPosts.push({ id: doc.id, data: doc.data() });
-  // });
   return foundPosts;
 };
 export const getAllPendingProject = async () => {
@@ -76,14 +60,10 @@ export const getAllPendingProject = async () => {
     where("approved", "==", false)
   );
   const querySnapshot = await getDocs(q);
-  // const snapshot = await getDocs(taskRef);
   querySnapshot.forEach((doc) => {
     foundPosts.push({ id: doc.id, data: doc.data() });
   });
 
-  // snapshot.forEach((doc) => {
-  //   foundPosts.push({ id: doc.id, data: doc.data() });
-  // });
   return foundPosts;
 };
 
@@ -99,29 +79,10 @@ export const login = async (email) => {
   const q = await query(userRef, where("emailId", "==", email));
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
-    // foundUser.push({ id: doc.id, data: doc.data() });
     console.log({ id: doc.id, data: doc.data() });
   });
-  // console.log(foundUser[0]);
   return foundUser[0];
 };
-
-// export async function getUserByEmail(email) {
-//   // Make the initial query
-//   const q = await query(
-//     collection(db, "user"),
-//     where("emailId", "==", email)
-//   ).get();
-
-//   if (!q.empty) {
-//     const snapshot = q.docs[0];
-//     const data = await snapshot.data();
-//     console.log(data);
-//     return data;
-//   } else {
-//     console.log("user not found by email");
-//   }
-// }
 
 export const approvePost = async (taskId, userId, points) => {
   const userRef = doc(db, "user", userId);

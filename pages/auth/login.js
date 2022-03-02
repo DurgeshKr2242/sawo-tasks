@@ -17,32 +17,12 @@ const Login = () => {
     return new Promise(function (resolve, reject) {
       resolve(login(email));
     });
-    // console.log("ftom useEffect", foundUser);
   };
-
-  // useEffect(() => {
-  //   const verifyEmail = async (email) => {
-  //     const res = await getUser(email);
-  //     setFoundUser(res);
-  //     console.log("logging res", res);
-  //   };
-  //   console.log(payloadEmail);
-  //   verifyEmail("code.durgesh@gmail.com");
-  // }, [payloadEmail]);
 
   const sawoLoginCallback = async (payload) => {
     console.log(JSON.stringify(payload));
     localStorage.setItem("sawoPayload", JSON.stringify(payload));
     router.reload(window.location.pathname);
-
-    // console.log(JSON.stringify(payload.identifier));
-    // setPayloadEmail(JSON.stringify(payload.identifier));
-    // const verifyEmail = async (email) => {
-    //   const res = await getUser(email);
-    //   setFoundUser(res);
-    //   console.log("logging res", res);
-    // };
-    // verifyEmail(JSON.stringify(payload.identifier));
   };
 
   const sawoConfig = {

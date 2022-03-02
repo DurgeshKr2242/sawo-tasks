@@ -78,7 +78,6 @@ const BlogApprove = ({ post }) => {
       <div className="flex items-center justify-between">
         <button
           disabled={loading ? true : false}
-          // onClick={() => approvePost(post.id, user.id, points)}
           onClick={() =>
             approvePostHandler(post.id, post.data.createdBy.creatorId, points)
           }
