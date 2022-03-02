@@ -52,6 +52,7 @@ const SocialMentions = () => {
       createdBy: {
         name: user.data.name,
         email: user.data.emailId,
+        champType: user.data.champType,
       },
       approved: false,
     };

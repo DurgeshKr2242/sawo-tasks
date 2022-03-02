@@ -52,7 +52,9 @@ const SocialMentionApprove = ({ post }) => {
         className="flex flex-col w-full gap-4 px-3 py-2 mt-6 border-2 rounded-lg border-yellow"
       >
         <div className="flex justify-between">
-          <p>By : {post.data.createdBy.name} (Developer)</p>
+          <p>
+            By : {post.data.createdBy.name} ({post.data.createdBy.champType})
+          </p>
           <div className="flex items-center gap-2">
             <label>Points : </label>
             <input

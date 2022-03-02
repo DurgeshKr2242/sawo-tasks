@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { serverTimestamp } from "firebase/firestore";
 import { Timestamp } from "firebase/firestore";
@@ -11,6 +11,9 @@ const BlogInputs = () => {
   const [blogUrl, setBlogUrl] = useState("");
   const [blogTitle, setBlogTitle] = useState("");
   const [platform, setPlatform] = useState("");
+  useEffect(() => {
+    console.log(user);
+  }, []);
 
   const blogSubmitHandler = async () => {
     setLoading(true);
@@ -26,6 +29,7 @@ const BlogInputs = () => {
       createdBy: {
         name: user.data.name,
         email: user.data.emailId,
+        champType: user.data.champType,
       },
       approved: false,
     };
