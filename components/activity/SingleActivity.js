@@ -9,7 +9,7 @@ const SingleActivity = ({ data }) => {
 
   return (
     <div className="flex flex-col items-start">
-      <p className="flex items-center gap-4 -ml-1 ">
+      <div className="flex items-center gap-4 -ml-1 ">
         <SiNextcloud />{" "}
         <div>
           <p> {data.data.timestamp.toDate().toDateString("en-US")}</p>
@@ -17,7 +17,7 @@ const SingleActivity = ({ data }) => {
             {data.data.timestamp.toDate().toLocaleTimeString("en-US")}
           </p>
         </div>
-      </p>
+      </div>
       <div className="w-full border-l-2 border-tWhiteSec/20">
         <div
           className="tabletS:ml-8 -ml-4  border-[1px] border-tWhiteSec/20 bg-white rounded-lg px-6 py-4 mb-8 mt-4 
@@ -25,11 +25,11 @@ const SingleActivity = ({ data }) => {
         >
           <div className="flex justify-between ">
             <div className="flex flex-col items-start gap-1 ">
-              <p className="text-base tracking-wide uppercase text-tWhite">
+              <div className="text-base tracking-wide uppercase text-tWhite">
                 <p>{data.data.taskType}</p>
-              </p>
+              </div>
               <div className="text-sm text-tWhiteSec">
-                <p>-{data.data.createdBy.name}</p>
+                <p> -{data.data.createdBy.name}</p>
                 <p className="text-xs italic">({data.data.createdBy.email})</p>
               </div>
             </div>

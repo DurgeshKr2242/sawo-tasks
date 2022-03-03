@@ -10,16 +10,16 @@ const SocialMentions = () => {
   const [loading, setLoading] = useState(false);
 
   const [linkedInUrl, setLinkedInUrl] = useState("");
-  const [linkedInComment, setLinkedInComment] = useState(null);
-  const [linkedInViews, setLinkedInViews] = useState(null);
-  const [linkedInReactions, setLinkedInReactions] = useState(null);
+  const [linkedInComment, setLinkedInComment] = useState("");
+  const [linkedInViews, setLinkedInViews] = useState("");
+  const [linkedInReactions, setLinkedInReactions] = useState("");
   const [twitterUrl, setTwitterUrl] = useState("");
-  const [twitterLikes, setTwitterLikes] = useState(null);
-  const [twitterComments, setTwitterComments] = useState(null);
+  const [twitterLikes, setTwitterLikes] = useState("");
+  const [twitterComments, setTwitterComments] = useState("");
   const [twitterOtherInsights, setTwitterOtherInsights] = useState("");
   const [instaUrl, setInstaUrl] = useState("");
-  const [instaLikes, setInstaLikes] = useState(null);
-  const [instaComments, setInstaComments] = useState(null);
+  const [instaLikes, setInstaLikes] = useState("");
+  const [instaComments, setInstaComments] = useState("");
   const [instaOtherInsights, setInstaOtherInsights] = useState("");
 
   const socialMentionsSubmitHandler = async () => {

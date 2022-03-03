@@ -3,8 +3,8 @@ import SingleActivity from "./SingleActivity";
 const GlobalActivity = ({ globalActivity }) => {
   return (
     <>
-      {globalActivity.map((data) => {
-        return <SingleActivity data={data} />;
+      {globalActivity.map((data, i) => {
+        return <SingleActivity key={i} data={data} />;
       })}
       {/* <SingleActivity />
       <SingleActivity />

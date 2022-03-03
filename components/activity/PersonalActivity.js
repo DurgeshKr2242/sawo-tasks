@@ -4,8 +4,8 @@ import SingleActivity from "./SingleActivity";
 const PersonalActivity = ({ userActivity }) => {
   return (
     <>
-      {userActivity.map((data) => {
-        return <SingleActivity data={data} />;
+      {userActivity.map((data, i) => {
+        return <SingleActivity key={i} data={data} />;
       })}
       {/* <SingleActivity />
       <SingleActivity />
