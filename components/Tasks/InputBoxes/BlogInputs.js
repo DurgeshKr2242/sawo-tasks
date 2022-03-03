@@ -11,9 +11,6 @@ const BlogInputs = () => {
   const [blogUrl, setBlogUrl] = useState("");
   const [blogTitle, setBlogTitle] = useState("");
   const [platform, setPlatform] = useState("");
-  useEffect(() => {
-    console.log(user);
-  }, []);
 
   const blogSubmitHandler = async () => {
     setLoading(true);
@@ -24,6 +21,7 @@ const BlogInputs = () => {
         platform,
         blogUrl,
       },
+      creatorId: user.id,
       points: 0,
       timestamp: Timestamp.now(),
       createdBy: {
@@ -39,7 +37,7 @@ const BlogInputs = () => {
         throw "Please enter a valid Blog Url";
       }
       const addedBlog = await addTask(data);
-      console.log(addedBlog);
+      // console.log(addedBlog);
       toast("Task Submitted, waiting for approval!", {
         position: "bottom-right",
         autoClose: 5000,

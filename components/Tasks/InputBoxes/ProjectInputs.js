@@ -24,6 +24,7 @@ const Projects = () => {
         description,
         projectName,
       },
+      creatorId: user.id,
       points: 0,
       timestamp: Timestamp.now(),
       createdBy: {

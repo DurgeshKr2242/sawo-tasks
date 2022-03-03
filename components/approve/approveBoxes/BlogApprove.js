@@ -18,7 +18,7 @@ const BlogApprove = ({ post }) => {
       if (!points) {
         throw "Please enter valid points";
       }
-      console.log(postId, userId, points);
+      // console.log(postId, userId, points);
       await approvePost(postId, userId, points);
       toast("Approved! Points alloted", {
         position: "bottom-right",

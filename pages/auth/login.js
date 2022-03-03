@@ -20,7 +20,7 @@ const Login = () => {
   };
 
   const sawoLoginCallback = async (payload) => {
-    console.log(JSON.stringify(payload));
+    // console.log(JSON.stringify(payload));
     localStorage.setItem("sawoPayload", JSON.stringify(payload));
     router.reload(window.location.pathname);
   };

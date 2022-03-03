@@ -2,6 +2,10 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { GoThreeBars } from "react-icons/go";
 import { useGlobalAuthContext } from "../../AuthContext";
+import Link from "next/link";
+
+// TODO: Comditional rendering if the user is an admin or not
+
 const Navbar = () => {
   const router = useRouter();
   const { user } = useGlobalAuthContext();
@@ -40,10 +44,18 @@ const Navbar = () => {
               Approve
               <div className="absolute w-0 h-1 transition-all duration-300 -bottom-1 bg-yellow group-hover:w-full"></div>
             </li>
-            <li className="relative cursor-pointer group">
-              Scoring Schema
-              <div className="absolute w-0 h-1 transition-all duration-300 -bottom-1 bg-yellow group-hover:w-full"></div>
-            </li>
+            <Link
+              href={
+                "https://longhaired-work-e70.notion.site/SAWO-Champ-Scoring-Schema-Cohort-2-c6d8f7f2271a4ca482673a5b8afffbac"
+              }
+            >
+              <a target="_blank">
+                <li className="relative cursor-pointer group">
+                  Scoring Schema
+                  <div className="absolute w-0 h-1 transition-all duration-300 -bottom-1 bg-yellow group-hover:w-full"></div>
+                </li>
+              </a>
+            </Link>
           </ul>
 
           <div className="flex gap-5 ">
