@@ -10,9 +10,6 @@ const Navbar = () => {
   const router = useRouter();
   const { user } = useGlobalAuthContext();
   const [showMenue, setShowMenue] = useState(false);
-  // useEffect(() => {
-  //   console.log(user?.id);
-  // }, [user]);
 
   return (
     <div key="help" className="flex justify-center w-full">
@@ -23,13 +20,15 @@ const Navbar = () => {
 
         <div className="items-center hidden gap-16 tablet:flex">
           <ul className="flex gap-5">
-            <li
-              onClick={() => router.push("/addTask")}
-              className="relative cursor-pointer group"
-            >
-              Add Task
-              <div className="absolute w-0 h-1 transition-all duration-300 -bottom-1 bg-yellow group-hover:w-full"></div>
-            </li>
+            {user && (
+              <li
+                onClick={() => router.push("/addTask")}
+                className="relative cursor-pointer group"
+              >
+                Add Task
+                <div className="absolute w-0 h-1 transition-all duration-300 -bottom-1 bg-yellow group-hover:w-full"></div>
+              </li>
+            )}
             <li
               onClick={() => router.push("/leaderboard")}
               className="relative cursor-pointer group "
@@ -37,13 +36,15 @@ const Navbar = () => {
               Leaderbord
               <div className="absolute w-0 h-1 transition-all duration-300 -bottom-1 bg-yellow group-hover:w-full"></div>
             </li>
-            <li
-              onClick={() => router.push("/approve")}
-              className="relative cursor-pointer group"
-            >
-              Approve
-              <div className="absolute w-0 h-1 transition-all duration-300 -bottom-1 bg-yellow group-hover:w-full"></div>
-            </li>
+            {user?.data.isAdmin && (
+              <li
+                onClick={() => router.push("/approve")}
+                className="relative cursor-pointer group"
+              >
+                Approve
+                <div className="absolute w-0 h-1 transition-all duration-300 -bottom-1 bg-yellow group-hover:w-full"></div>
+              </li>
+            )}
             <Link
               href={
                 "https://longhaired-work-e70.notion.site/SAWO-Champ-Scoring-Schema-Cohort-2-c6d8f7f2271a4ca482673a5b8afffbac"

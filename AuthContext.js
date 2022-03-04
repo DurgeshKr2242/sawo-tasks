@@ -28,14 +28,12 @@ const AuthProvider = ({ children }) => {
         querySnapshot.forEach((doc) => {
           foundUser.push({ id: doc.id, data: doc.data() });
         });
-        // console.log(foundUser[0]);
         setUser(foundUser[0]);
       } else {
         setUser(null);
       }
     };
     getUser();
-    // console.log(foundUser[0]);
   }, []);
 
   return (

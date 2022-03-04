@@ -1,72 +1,75 @@
-import React from "react";
+import React, { useState } from "react";
 import { useGlobalAuthContext } from "../../AuthContext";
-const Leaderboard = () => {
+import MonthlyLeaderboard from "./MonthlyLeaderboard";
+import OverallLeaderboard from "./OverallLeaderboard";
+import WeeklyLeaderboard from "./WeeklyLeaderboard";
+const Leaderboard = ({
+  overallLeaderboard,
+  monthlyLeaderboard,
+  weeklyLeaderboard,
+}) => {
   const { user } = useGlobalAuthContext();
+  const [activeInput, setActiveInput] = useState("OverallLeaderboard");
   return (
-    <div className="flex flex-col w-full gap-4 mb-8 font-semibold mt-28">
-      <p>{user?.data?.name}</p>
+    <div className="flex flex-col w-full gap-4 mt-8 mb-8 font-semibold">
+      <div className="flex flex-col justify-between w-full gap-5 mt-20 mobile-l:flex-row ">
+        <p
+          onClick={() => setActiveInput("OverallLeaderboard")}
+          className="px-6 py-1 bg-red-400 rounded-lg cursor-pointer hover:bg-yellow/50"
+        >
+          Reset Weekly
+        </p>
 
-      <ul className="flex flex-col w-full gap-6">
-        <li className="border-b-[1px] px-2 border-yellow/40 pb-4 flex justify-between">
-          <div className="flex gap-4">
-            <p className="px-2 rounded-full bg-orange-400/90">1</p>
-            <p>Durgesh Kumar</p>
-          </div>
-          <p>200</p>
-        </li>
+        <p
+          onClick={() => setActiveInput("MonthlyLeaderboard")}
+          className="px-6 py-1 bg-red-400 rounded-lg cursor-pointer hover:bg-yellow/50"
+        >
+          Reset Monthly
+        </p>
+      </div>
 
-        <li className="border-b-[1px] px-2 border-yellow/40 pb-4 flex justify-between">
-          <div className="flex gap-4">
-            <p className="px-2 bg-green-300 rounded-full">2</p>
-            <p>Durgesh Kumar</p>
-          </div>
-          <p>200</p>
-        </li>
+      <div className="flex flex-col justify-between w-full gap-5 mt-20 mobile-l:flex-row ">
+        <p
+          onClick={() => setActiveInput("OverallLeaderboard")}
+          className={`${
+            activeInput === "OverallLeaderboard"
+              ? "bg-yellow "
+              : "border-2 border-yellow"
+          } px-6 py-1 rounded-lg cursor-pointer hover:bg-yellow/50`}
+        >
+          Personal
+        </p>
 
-        <li className="border-b-[1px] px-2 border-yellow/40 pb-4 flex justify-between">
-          <div className="flex gap-4">
-            <p className="px-2 bg-gray-300 rounded-full">3</p>
-            <p>Durgesh Kumar</p>
-          </div>
-          <p>200</p>
-        </li>
-
-        <li className="border-b-[1px] px-2 border-yellow/40 pb-4 flex justify-between">
-          <div className="flex gap-4">
-            <p className="px-2 rounded-full">4</p>
-            <p>Durgesh Kumar</p>
-          </div>
-          <p>200</p>
-        </li>
-        <li className="border-b-[1px] px-2 border-yellow/40 pb-4 flex justify-between">
-          <div className="flex gap-4">
-            <p className="px-2 rounded-full">5</p>
-            <p>Durgesh Kumar</p>
-          </div>
-          <p>200</p>
-        </li>
-        <li className="border-b-[1px] px-2 border-yellow/40 pb-4 flex justify-between">
-          <div className="flex gap-4">
-            <p className="px-2 rounded-full">6</p>
-            <p>Durgesh Kumar</p>
-          </div>
-          <p>200</p>
-        </li>
-        <li className="border-b-[1px] px-2 border-yellow/40 pb-4 flex justify-between">
-          <div className="flex gap-4">
-            <p className="px-2 rounded-full">7</p>
-            <p>Durgesh Kumar</p>
-          </div>
-          <p>200</p>
-        </li>
-        <li className="border-b-[1px] px-2 border-yellow/40 pb-4 flex justify-between">
-          <div className="flex gap-4">
-            <p className="px-2 rounded-full">8</p>
-            <p>Durgesh Kumar</p>
-          </div>
-          <p>200</p>
-        </li>
-      </ul>
+        <p
+          onClick={() => setActiveInput("MonthlyLeaderboard")}
+          className={`${
+            activeInput === "MonthlyLeaderboard"
+              ? "bg-yellow "
+              : "border-2 border-yellow"
+          } px-6 py-1 rounded-lg cursor-pointer hover:bg-yellow/50`}
+        >
+          Monthly
+        </p>
+        <p
+          onClick={() => setActiveInput("WeeklyLeaderboard")}
+          className={`${
+            activeInput === "WeeklyLeaderboard"
+              ? "bg-yellow "
+              : "border-2 border-yellow"
+          } px-6 py-1 rounded-lg cursor-pointer hover:bg-yellow/50`}
+        >
+          Weekly
+        </p>
+      </div>
+      <div className="mt-14">
+        {activeInput === "OverallLeaderboard" ? (
+          <OverallLeaderboard overallLeaderboard={overallLeaderboard} />
+        ) : activeInput === "MonthlyLeaderboard" ? (
+          <MonthlyLeaderboard monthlyLeaderboard={monthlyLeaderboard} />
+        ) : (
+          <WeeklyLeaderboard weeklyLeaderboard={weeklyLeaderboard} />
+        )}
+      </div>
     </div>
   );
 };

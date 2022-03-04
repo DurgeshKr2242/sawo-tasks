@@ -35,6 +35,8 @@ export const approvePost = async (taskId, userId, points) => {
   const taskRef = doc(db, "Tasks", taskId);
   await updateDoc(userRef, {
     totalPoints: increment(points),
+    monthlyPoints: increment(points),
+    weeklyPoints: increment(points),
   });
   await updateDoc(taskRef, {
     approved: true,
@@ -128,4 +130,54 @@ export const getGlobalActivity = async () => {
   });
 
   return foundPosts;
+};
+
+export const getOverallLeaderboard = async () => {
+  const foundLeaderboard = [];
+  const taskRef = collection(db, "user");
+  const q = await query(
+    taskRef,
+    where("isAdmin", "==", false),
+    orderBy("totalPoints", "desc")
+    // where("approved", "==", true)
+  );
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    foundLeaderboard.push({ id: doc.id, data: doc.data() });
+  });
+
+  return foundLeaderboard;
+};
+
+export const getMonthlyLeaderboard = async () => {
+  const foundLeaderboard = [];
+  const taskRef = collection(db, "user");
+  const q = await query(
+    taskRef,
+    where("isAdmin", "==", false),
+    orderBy("monthlyPoints", "desc")
+    // where("approved", "==", true)
+  );
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    foundLeaderboard.push({ id: doc.id, data: doc.data() });
+  });
+
+  return foundLeaderboard;
+};
+export const getWeeklyLeaderboard = async () => {
+  const foundLeaderboard = [];
+  const taskRef = collection(db, "user");
+  const q = await query(
+    taskRef,
+    where("isAdmin", "==", false),
+    orderBy("weeklyPoints", "desc")
+    // where("approved", "==", true)
+  );
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    foundLeaderboard.push({ id: doc.id, data: doc.data() });
+  });
+
+  return foundLeaderboard;
 };
