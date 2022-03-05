@@ -43,6 +43,43 @@ export const approvePost = async (taskId, userId, points) => {
     points: points,
   });
 };
+
+export const resetWeeklyPoint = async () => {
+  // Get all users
+  const foundUsers = [];
+  const userCollRef = collection(db, "user");
+  const snapshot = await getDocs(userCollRef);
+  snapshot.forEach(async (doc) => {
+    foundUsers.push(doc.id);
+  });
+
+  // Reset weekly points
+  foundUsers.map(async (userId) => {
+    const userDocRef = await doc(db, "user", userId);
+    await updateDoc(userDocRef, {
+      weeklyPoints: 0,
+    });
+  });
+};
+
+export const resetMonthlyPoint = async () => {
+  // Get all users
+  const foundUsers = [];
+  const userCollRef = collection(db, "user");
+  const snapshot = await getDocs(userCollRef);
+  snapshot.forEach(async (doc) => {
+    foundUsers.push(doc.id);
+  });
+
+  // Reset weekly points
+  foundUsers.map(async (userId) => {
+    const userDocRef = await doc(db, "user", userId);
+    await updateDoc(userDocRef, {
+      monthlyPoints: 0,
+    });
+  });
+};
+
 export const getAllTasks = async () => {
   const docRef = collection(db, "Tasks");
   const foundPosts = [];
@@ -167,9 +204,9 @@ export const getMonthlyLeaderboard = async () => {
 };
 export const getWeeklyLeaderboard = async () => {
   const foundLeaderboard = [];
-  const taskRef = collection(db, "user");
+  const userRef = collection(db, "user");
   const q = await query(
-    taskRef,
+    userRef,
     where("isAdmin", "==", false),
     orderBy("weeklyPoints", "desc")
     // where("approved", "==", true)
