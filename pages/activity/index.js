@@ -4,7 +4,7 @@ import { getUserActivity, getGlobalActivity } from "../../apis";
 import { useGlobalAuthContext } from "../../AuthContext";
 // TODO: User Id is hard coded
 
-const index = () => {
+const Activity = () => {
   const { user } = useGlobalAuthContext();
 
   const [userActivity, setUserActivity] = useState([]);
@@ -35,4 +35,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Activity;
