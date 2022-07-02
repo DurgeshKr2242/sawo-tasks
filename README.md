@@ -18,7 +18,7 @@ Web app which brings together all the activities of sawo champ at one place.
 
 Plese Check the demo video for complete understanding of the project - 
 
-![Click Here for Demo Video](https://drive.google.com/drive/folders/1m0TS3OYDVL9DAuVZuJpbzFMZcUqfl7Wt?usp=sharing)
+[Click Here for Demo Video](https://drive.google.com/drive/folders/1m0TS3OYDVL9DAuVZuJpbzFMZcUqfl7Wt?usp=sharing)
 
 ## Screenshots
 
